@@ -8,6 +8,7 @@ const extension = (joi) => ({
   messages: {
     "string.escapeHTML": "{{#label}} must not include HTML!",
   },
+
   rules: {
     escapeHTML: {
       validate(value, helpers) {
@@ -38,6 +39,12 @@ module.exports.userRegisterSchema = Joi.object({
     .email({ minDomainSegments: 2, tlds: { allow: ["com", "in"] } })
     .required()
     .escapeHTML(),
+  phone: Joi.object({
+    code: Joi.string().required().escapeHTML(),
+    phone: Joi.string()
+      .required()
+      .regex(/^\d{10}$/),
+  }).required(),
   password: Joi.string().required().escapeHTML(),
   confirmPassword: Joi.ref("password"),
   type: Joi.string().valid("user", "vendor").required().escapeHTML(),

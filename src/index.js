@@ -2,14 +2,15 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const routes = require("./routes");
 const express = require("express");
-const { jwt } = require("./utils");
+const { jwt, catchAsync } = require("./utils");
 const connectToDatabase = require("./database");
 const { sendResponse } = require("./utils");
 const {
   STATUS_CODES: { UNAUTHORIZED },
 } = require("./constants");
-const methodOverride = require('method-override');
-const mongoSanitizer = require('express-mongo-sanitize');
+const methodOverride = require("method-override");
+const mongoSanitizer = require("express-mongo-sanitize");
+const { checkUser } = require("./middleware");
 
 function run() {
   dotenv.config();
@@ -21,8 +22,12 @@ function run() {
   app.use(mongoSanitizer());
   app.use(cors());
   app.use(jwt());
+  app.use(
+    catchAsync(async (req, res, next) => {
+      await checkUser(req, res, next);
+    })
+  );
   app.use(routes);
-
   app.use(function (err, req, res, next) {
     if (err.name === "UnauthorizedError") {
       sendResponse(res, UNAUTHORIZED, { msg: "Login to continue" }, true);

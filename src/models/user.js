@@ -13,6 +13,19 @@ const userSchema = new mongoose.Schema(
       unique: true,
       required: [true, "Email is required"],
     },
+    phone: {
+      code: {
+        type: String,
+        trim: true,
+        required: [true, "Phone code is required"],
+      },
+      phone: {
+        type: String,
+        trim: true,
+        unique: true,
+        required: [true, "Phone code is required"],
+      },
+    },
     password: {
       trim: true,
       type: String,
@@ -46,7 +59,7 @@ userSchema.statics.findAndAuthenticate = async function (
 ) {
   const foundUser = await this.findOne({ email });
   if (!foundUser || foundUser.type != type) {
-    throw new ExpressError(USER_NOT_DEFINED.code, USER_NOT_DEFINED.message);
+    throw new ExpressError(USER_NOT_DEFINED.message, USER_NOT_DEFINED.code);
   }
 
   const isValid = await bcrypt.compare(password, foundUser.password);
@@ -55,7 +68,7 @@ userSchema.statics.findAndAuthenticate = async function (
     foundUser.password = undefined;
     return foundUser;
   } else {
-    throw new ExpressError(PASSWORD_INCORRECT.code, PASSWORD_INCORRECT.message);
+    throw new ExpressError(PASSWORD_INCORRECT.message, PASSWORD_INCORRECT.code);
   }
 };
 // Function to authenticate
@@ -65,8 +78,8 @@ userSchema.statics.checkExistingUser = async function (email) {
   const foundUser = await this.findOne({ email });
   if (foundUser) {
     throw new ExpressError(
-      USER_ALREADY_EXISTS.code,
-      USER_ALREADY_EXISTS.message
+      USER_ALREADY_EXISTS.message,
+      USER_ALREADY_EXISTS.code
     );
   } else {
     return;

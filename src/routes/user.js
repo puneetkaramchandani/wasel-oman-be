@@ -11,7 +11,17 @@ const {
 const {
   STATUS_CODES: { SUCCESS },
 } = require("../constants");
+const { getUserById } = require("../services/user");
+
 const router = express.Router();
+
+router.get(
+  "/me",
+  catchAsync(async (req, res) => {
+    const data = await getUserById(req.user._id);
+    sendResponse(res, SUCCESS, data);
+  })
+);
 
 // Authenticate User With Email and Password
 router.post(

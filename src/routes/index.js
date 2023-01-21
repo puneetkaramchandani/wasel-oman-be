@@ -13,8 +13,9 @@ app.get(
   })
 );
 
-app.use("/login", require("./login"));
 app.use("/user", require("./user"));
+app.use("/login", require("./login"));
+app.use("/resturant", require("./resturant"));
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(NOT_FOUND.message, NOT_FOUND.code));

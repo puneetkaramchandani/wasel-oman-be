@@ -11,10 +11,11 @@ function jwt() {
       "/login/vendor",
       "/login/admin",
       "/user/register",
+      "/resturant",
     ],
   });
 }
 
 async function isRevoked(req, payload, done) {
-  done();
+  done;
 }
