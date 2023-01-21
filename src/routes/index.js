@@ -13,7 +13,7 @@ app.get(
   })
 );
 
-app.use("/auth", require("./auth"));
+app.use("/login", require("./login"));
 app.use("/user", require("./user"));
 
 app.all("*", (req, res, next) => {

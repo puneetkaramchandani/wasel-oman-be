@@ -2,11 +2,12 @@ const User = require("../models/user");
 const { generateToken } = require("../utils");
 
 module.exports = {
-  authenticate,
+  authenticateUser,
 };
-async function authenticate(data) {
+
+async function authenticateUser(data, type = "user") {
   const { email, password } = data;
-  const user = await User.findAndAuthenticate(email, password);
+  const user = await User.findAndAuthenticate(email, password, type);
   const accessToken = generateToken(user._id);
   return {
     user,

@@ -39,9 +39,13 @@ userSchema.pre("save", async function (next) {
 // Function to encrypt the password
 
 // Function to authenticate
-userSchema.statics.findAndAuthenticate = async function (email, password) {
+userSchema.statics.findAndAuthenticate = async function (
+  email,
+  password,
+  type = "user"
+) {
   const foundUser = await this.findOne({ email });
-  if (!foundUser) {
+  if (!foundUser || foundUser.type != type) {
     throw new ExpressError(USER_NOT_DEFINED.code, USER_NOT_DEFINED.message);
   }
 

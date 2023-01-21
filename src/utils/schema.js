@@ -40,5 +40,5 @@ module.exports.userRegisterSchema = Joi.object({
     .escapeHTML(),
   password: Joi.string().required().escapeHTML(),
   confirmPassword: Joi.ref("password"),
-  type: Joi.string().valid("user", "vendor").escapeHTML(),
+  type: Joi.string().valid("user", "vendor").required().escapeHTML(),
 });
