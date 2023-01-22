@@ -49,3 +49,18 @@ module.exports.userRegisterSchema = Joi.object({
   confirmPassword: Joi.ref("password"),
   type: Joi.string().valid("user", "vendor").required().escapeHTML(),
 });
+
+module.exports.contactUsQuerySchema = Joi.object({
+  name: Joi.string().required().escapeHTML(),
+  email: Joi.string()
+    .email({ minDomainSegments: 2, tlds: { allow: ["com", "in"] } })
+    .required()
+    .escapeHTML(),
+  phone: Joi.object({
+    code: Joi.string().required().escapeHTML(),
+    phone: Joi.string()
+      .required()
+      .regex(/^\d{10}$/),
+  }).required(),
+  message: Joi.string().required().escapeHTML(),
+});

@@ -3,7 +3,11 @@ const catchAsync = require("./catchAsync");
 const ExpressError = require("./expressError");
 const { sendResponse } = require("./response");
 const generateToken = require("./generateToken");
-const { userRegisterSchema, userLoginSchema } = require("./schema");
+const {
+  userRegisterSchema,
+  userLoginSchema,
+  contactUsQuerySchema,
+} = require("./schema");
 const validateSchema = require("./validate");
 module.exports = {
   jwt,
@@ -14,4 +18,5 @@ module.exports = {
   userRegisterSchema,
   userLoginSchema,
   validateSchema,
+  contactUsQuerySchema,
 };
