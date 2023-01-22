@@ -13,5 +13,6 @@ module.exports = {
 
 async function createContactUsQuery(data) {
   const newContactQuery = new Contact({ ...data });
+  await newContactQuery.save();
   return { newContactQuery };
 }
