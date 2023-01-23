@@ -10,7 +10,8 @@ async function getAllResturants() {
   return { resturants };
 }
 
-async function createNewResturant(data) {
-  const newResturant = new Resturant({ ...data });
-  return newResturant;
+async function createNewResturant(data, user) {
+  const newResturant = new Resturant({ ...data, user: user._id });
+  await newResturant.save();
+  return { newResturant };
 }

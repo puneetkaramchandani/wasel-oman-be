@@ -19,12 +19,12 @@ const resturantSchema = new mongoose.Schema(
         required: [true, "Locality is required"],
       },
       location: {
-        longitude: {
+        long: {
           trim: true,
           type: String,
           required: [true, "location longitude is required"],
         },
-        latitude: {
+        lat: {
           trim: true,
           type: String,
           required: [true, "location latitude is required"],
@@ -58,7 +58,8 @@ const resturantSchema = new mongoose.Schema(
     status: {
       trim: true,
       type: String,
-      required: [true, "Resturant status is required"],
+      enum: ["underVerification", "active", "suspended"],
+      default:"underVerification"
     },
     rating: {
       type: Number,
@@ -79,34 +80,44 @@ const resturantSchema = new mongoose.Schema(
       required: [true, "Resturant type is required"],
       enum: ["veg", "nonVeg", "veg&NonVeg"],
     },
-    categories: [
+    cuisines: [
       {
         type: String,
         trim: true,
-        required: [true, "At least one category is required"],
+        required: [true, "At least one cuisine is required"],
         enum: ["North Indian", "Chinese", "South Indian"],
       },
     ],
+    category: {
+      type: String,
+      trim: true,
+      default: "New",
+      enum: ["Popular", "Top Rated", "New"],
+    },
     thumbnail: {
       fileName: {
         type: String,
         default: null,
+        required:[true,"Thumbnail filename is required"]
       },
       url: {
         type: String,
         default: null,
         trim: true,
+        required:[true,"Thumbnail url is required"]
       },
     },
     logo: {
       fileName: {
         type: String,
         default: null,
+        required:[true,"Logo filename is required"]
       },
       url: {
         type: String,
         default: null,
         trim: true,
+        required:[true,"Logo url is required"]
       },
     },
   },

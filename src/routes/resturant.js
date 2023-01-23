@@ -21,7 +21,7 @@ router.get(
 router.post(
   "/",
   catchAsync(async (req, res) => {
-    const data = await createNewResturant(req.body);
+    const data = await createNewResturant(req.body, req.user);
     sendResponse(res, SUCCESS, data);
   })
 );
