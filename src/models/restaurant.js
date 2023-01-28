@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const resturantSchema = new mongoose.Schema(
+const restaurantSchema = new mongoose.Schema(
   {
     name: {
       trim: true,
       type: String,
-      required: [true, "Resturant name is required"],
+      required: [true, "Restaurant name is required"],
     },
     address: {
       line: {
@@ -42,12 +42,12 @@ const resturantSchema = new mongoose.Schema(
       openTime: {
         trim: true,
         type: String,
-        required: [true, "Resturant open time is required"],
+        required: [true, "Restaurant open time is required"],
       },
       closeTime: {
         trim: true,
         type: String,
-        required: [true, "Resturant close time is required"],
+        required: [true, "Restaurant close time is required"],
       },
     },
     user: {
@@ -77,7 +77,7 @@ const resturantSchema = new mongoose.Schema(
     type: {
       type: String,
       trim: true,
-      required: [true, "Resturant type is required"],
+      required: [true, "Restaurant type is required"],
       enum: ["veg", "nonVeg", "veg&NonVeg"],
     },
     cuisines: [
@@ -126,4 +126,4 @@ const resturantSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Resturant", resturantSchema);
+module.exports = mongoose.model("Restaurant", restaurantSchema);

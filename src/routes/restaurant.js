@@ -5,7 +5,7 @@ const {
 
 const { catchAsync, sendResponse } = require("../utils");
 const {
-  resturantServices: { getAllResturants, createNewResturant },
+  restaurantServices: { getAllRestaurants, createNewRestaurant },
 } = require("../services");
 
 const router = express.Router();
@@ -13,15 +13,15 @@ const router = express.Router();
 router.get(
   "/",
   catchAsync(async (req, res) => {
-    const data = await getAllResturants();
+    const data = await getAllRestaurants();
     sendResponse(res, SUCCESS, data);
   })
 );
 
 router.post(
-  "/",
+  "/new",
   catchAsync(async (req, res) => {
-    const data = await createNewResturant(req.body, req.user);
+    const data = await createNewRestaurant(req.body, req.user);
     sendResponse(res, SUCCESS, data);
   })
 );

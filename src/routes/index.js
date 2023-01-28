@@ -29,7 +29,7 @@ app.post(
 
 app.use("/user", require("./user"));
 app.use("/login", require("./login"));
-app.use("/resturant", require("./resturant"));
+app.use("/restaurants", require("./restaurant"));
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(NOT_FOUND.message, NOT_FOUND.code));
