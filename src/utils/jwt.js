@@ -12,7 +12,6 @@ function jwt() {
       "/login/admin",
       "/user/register",
       "/restaurants",
-      "/restaurants/new",
       "/contactUs",
     ],
   });
