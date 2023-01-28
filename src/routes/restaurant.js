@@ -3,7 +3,12 @@ const {
   STATUS_CODES: { SUCCESS },
 } = require("../constants");
 
-const { catchAsync, sendResponse } = require("../utils");
+const {
+  catchAsync,
+  sendResponse,
+  validateSchema,
+  createNewRestaurantSchema,
+} = require("../utils");
 const {
   restaurantServices: { getAllRestaurants, createNewRestaurant },
 } = require("../services");
@@ -44,6 +49,7 @@ router.use(
 router.post(
   "/new",
   catchAsync(async (req, res) => {
+    await validateSchema(createNewRestaurantSchema, req.body);
     const data = await createNewRestaurant(req.body, req.user);
     sendResponse(res, SUCCESS, data);
   })

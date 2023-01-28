@@ -64,3 +64,30 @@ module.exports.contactUsQuerySchema = Joi.object({
   }).required(),
   message: Joi.string().required().escapeHTML(),
 });
+
+module.exports.createNewRestaurantSchema = Joi.object({
+  name: Joi.string().required().escapeHTML(),
+  address: Joi.object({
+    line: Joi.string().required().escapeHTML(),
+    locality: Joi.string().required().escapeHTML(),
+    location: Joi.object({
+      long: Joi.string().required().escapeHTML(),
+      lat: Joi.string().required().escapeHTML(),
+    }).required(),
+  }).required(),
+  service: Joi.object({
+    daysOff: Joi.array().required(),
+    openTime: Joi.string().required().escapeHTML(),
+    closeTime: Joi.string().required().escapeHTML(),
+  }).required(),
+  type: Joi.string().required().escapeHTML(),
+  cuisines: Joi.array().required(),
+  thumbnail: Joi.object({
+    fileName: Joi.string().required().escapeHTML(),
+    url: Joi.string().required(),
+  }).required(),
+  logo: Joi.object({
+    fileName: Joi.string().required().escapeHTML(),
+    url: Joi.string().required(),
+  }).required(),
+});
