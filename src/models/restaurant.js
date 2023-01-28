@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const { ExpressError } = require("../utils");
+const {
+  STATUS_CODES: { CONFLICT },
+} = require("../constants");
 
 const restaurantSchema = new mongoose.Schema(
   {
@@ -59,7 +63,7 @@ const restaurantSchema = new mongoose.Schema(
       trim: true,
       type: String,
       enum: ["underVerification", "active", "suspended"],
-      default:"underVerification"
+      default: "underVerification",
     },
     rating: {
       type: Number,
@@ -98,26 +102,26 @@ const restaurantSchema = new mongoose.Schema(
       fileName: {
         type: String,
         default: null,
-        required:[true,"Thumbnail filename is required"]
+        required: [true, "Thumbnail filename is required"],
       },
       url: {
         type: String,
         default: null,
         trim: true,
-        required:[true,"Thumbnail url is required"]
+        required: [true, "Thumbnail url is required"],
       },
     },
     logo: {
       fileName: {
         type: String,
         default: null,
-        required:[true,"Logo filename is required"]
+        required: [true, "Logo filename is required"],
       },
       url: {
         type: String,
         default: null,
         trim: true,
-        required:[true,"Logo url is required"]
+        required: [true, "Logo url is required"],
       },
     },
   },
@@ -125,5 +129,16 @@ const restaurantSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Function to create a new user
+restaurantSchema.statics.checkExistingRestaurant = async function (user) {
+  const foundRestaurant = await this.findOne({ user: user });
+  if (foundRestaurant) {
+    throw new ExpressError(CONFLICT.message, CONFLICT.code);
+  } else {
+    return;
+  }
+};
+// Function to create a new user
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);

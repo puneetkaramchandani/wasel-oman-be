@@ -1,8 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { ExpressError } = require("../utils");
-const {
-  STATUS_CODES: { UNAUTHORIZED },
-} = require("../constants");
 const {
   userServices: { getUserById },
 } = require("../services");
