@@ -69,6 +69,8 @@ module.exports.createNewRestaurantSchema = Joi.object({
   name: Joi.string().required().escapeHTML(),
   address: Joi.object({
     line: Joi.string().required().escapeHTML(),
+    line: Joi.string().required().escapeHTML(),
+    areaPinCode: Joi.string().required().escapeHTML(),
     locality: Joi.string().required().escapeHTML(),
     location: Joi.object({
       long: Joi.string().required().escapeHTML(),

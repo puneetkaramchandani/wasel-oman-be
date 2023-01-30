@@ -22,6 +22,11 @@ const restaurantSchema = new mongoose.Schema(
         trim: true,
         required: [true, "Locality is required"],
       },
+      areaPinCode: {
+        type: String,
+        trim: true,
+        required: [true, "Area pin code is required"],
+      },
       location: {
         long: {
           trim: true,
