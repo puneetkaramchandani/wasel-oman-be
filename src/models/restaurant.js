@@ -11,6 +11,11 @@ const restaurantSchema = new mongoose.Schema(
       type: String,
       required: [true, "Restaurant name is required"],
     },
+    description: {
+      trim: true,
+      type: String,
+      required: [true, "Restaurant description required"],
+    },
     address: {
       line: {
         type: String,
@@ -97,7 +102,7 @@ const restaurantSchema = new mongoose.Schema(
         enum: ["North Indian", "Chinese", "South Indian"],
       },
     ],
-    category: {
+    feature: {
       type: String,
       trim: true,
       default: "New",
