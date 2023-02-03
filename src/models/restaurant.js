@@ -140,7 +140,7 @@ const restaurantSchema = new mongoose.Schema(
   }
 );
 
-// Function to create a new user
+// Function
 restaurantSchema.statics.checkExistingRestaurant = async function (user) {
   const foundRestaurant = await this.findOne({ user: user });
   if (foundRestaurant) {
@@ -149,6 +149,6 @@ restaurantSchema.statics.checkExistingRestaurant = async function (user) {
     return;
   }
 };
-// Function to create a new user
+// Function
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);

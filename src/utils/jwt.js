@@ -13,6 +13,7 @@ function jwt() {
       "/user/register",
       "/restaurants",
       "/contactUs",
+      "/products",
     ],
   });
 }
