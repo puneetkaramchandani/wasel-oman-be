@@ -10,6 +10,9 @@ const {
   createNewRestaurantSchema,
   createNewProductSchema,
   updateProductDetailsSchema,
+  createNewTableSchema,
+  updateTableSchema,
+  newOrderSchema,
 } = require("./schema");
 const validateSchema = require("./validate");
 module.exports = {
@@ -25,4 +28,7 @@ module.exports = {
   createNewRestaurantSchema,
   createNewProductSchema,
   updateProductDetailsSchema,
+  createNewTableSchema,
+  updateTableSchema,
+  newOrderSchema,
 };
