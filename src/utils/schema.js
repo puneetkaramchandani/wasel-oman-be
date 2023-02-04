@@ -119,3 +119,28 @@ module.exports.updateProductDetailsSchema = Joi.object({
     .min(1)
     .required(),
 });
+
+module.exports.createNewTableSchema = Joi.object({
+  number: Joi.number().min(0).required(),
+  price: Joi.number().min(0).required(),
+  capacity: Joi.number().min(1).required(),
+});
+
+module.exports.updateTableSchema = Joi.object({
+  tableId: Joi.string().required().escapeHTML(),
+  data: Joi.object({
+    number: Joi.number().min(0),
+    price: Joi.number().min(0),
+    capacity: Joi.number().min(1),
+  })
+    .min(1)
+    .required(),
+});
+
+module.exports.newOrderSchema = Joi.object({
+  cid: Joi.string().required().escapeHTML(),
+  bookingDetails: Joi.object({
+    date: Joi.date().required(),
+    time: Joi.string().required(),
+  }),
+});
