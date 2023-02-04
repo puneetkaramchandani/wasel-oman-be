@@ -15,11 +15,11 @@ function jwt() {
         method: ["POST"],
       },
       {
-        path: "/login/vendor",
+        url: "/login/admin",
         method: ["POST"],
       },
       {
-        url: "/login/admin",
+        url: "/login/vendor",
         method: ["POST"],
       },
       {
@@ -31,11 +31,19 @@ function jwt() {
         method: ["GET"],
       },
       {
+        url: "/tables",
+        method: ["GET"],
+      },
+      {
         url: /^\/restaurants\/[0-9a-fA-F]{24}$/,
         method: ["GET"],
       },
       {
         url: /^\/restaurants\/[0-9a-fA-F]{24}\/products/,
+        method: ["GET"],
+      },
+      {
+        url: /^\/restaurants\/[0-9a-fA-F]{24}\/tables/,
         method: ["GET"],
       },
       {
