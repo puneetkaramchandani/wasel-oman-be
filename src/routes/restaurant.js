@@ -15,6 +15,7 @@ const {
     getAllRestaurants,
     createNewRestaurant,
     getRestaurantById,
+    getRestaurantTables,
     getRestaurantProducts,
   },
 } = require("../services");
@@ -60,6 +61,18 @@ router.get(
   })
 );
 
+router.get(
+  "/:rid/tables",
+  catchAsync(async (req, res) => {
+    const { rid = null } = req.params;
+    if (!ObjectId.isValid(rid)) {
+      throw new ExpressError("Invalid restaurant id", 403);
+    }
+    const data = await getRestaurantTables(rid);
+    sendResponse(res, SUCCESS, data);
+  })
+);
+
 // Public Routes
 
 // Vendor Only Routes
@@ -77,6 +90,7 @@ router.use(
 /**
  * Creates a new restaurant and returns the data
  */
+
 router.post(
   "/new",
   catchAsync(async (req, res) => {
