@@ -1,12 +1,14 @@
-const Restaurant = require("../models/restaurant");
+const Table = require("../models/table");
 const Product = require("../models/product");
 const { ExpressError } = require("../utils");
+const Restaurant = require("../models/restaurant");
 
 module.exports = {
   getAllRestaurants,
   getRestaurantById,
   createNewRestaurant,
   getRestaurantProducts,
+  getRestaurantTables,
 };
 
 async function getAllRestaurants() {
@@ -32,4 +34,9 @@ async function createNewRestaurant(data, user) {
 async function getRestaurantProducts(rid) {
   const products = (await Product.find({ restaurant: rid })) || [];
   return { products };
+}
+
+async function getRestaurantTables(rid) {
+  const tables = (await Table.find({ restaurant: rid })) || [];
+  return { tables };
 }
