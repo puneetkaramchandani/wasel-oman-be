@@ -58,7 +58,12 @@ async function addProductToCart(cid = null, pid = null, user = null) {
       model: "Restaurant",
     },
   ]);
-  const product = await Product.findById(pid);
+  const product = await Product.findById(pid).populate([
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   if (cart === null) {
     throw new ExpressError("Cart not found", 402);
   } else if (product === null) {
