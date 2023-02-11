@@ -34,7 +34,8 @@ app.use("/orders", require("./order"));
 app.use("/tables", require("./table"));
 app.use("/products", require("./product"));
 app.use("/restaurants", require("./restaurant"));
-
+app.use("/vendorImageStore", require("./vendorImageStore"));
+app.use("/productImageStore", require("./productImageStore"));
 app.all("*", (req, res, next) => {
   next(new ExpressError(NOT_FOUND.message, NOT_FOUND.code));
 });
