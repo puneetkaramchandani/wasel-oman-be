@@ -39,7 +39,7 @@ router.post(
 router.delete(
   "/",
   catchAsync(async (req, res) => {
-    const response = await cloudinary.uploader.destroy(req.body.url);
+    const response = await cloudinary.uploader.destroy(req.body.fileName);
     if (response.result != "ok")
       throw new ExpressError(`${response.result}`, 402);
     let data = { message: "Image deleted successfully" };
