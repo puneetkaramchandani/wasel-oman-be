@@ -67,6 +67,7 @@ module.exports.contactUsQuerySchema = Joi.object({
 
 module.exports.createNewRestaurantSchema = Joi.object({
   name: Joi.string().required().escapeHTML(),
+  description: Joi.string().required().max(250).escapeHTML(),
   address: Joi.object({
     line: Joi.string().required().escapeHTML(),
     line: Joi.string().required().escapeHTML(),
@@ -92,4 +93,67 @@ module.exports.createNewRestaurantSchema = Joi.object({
     fileName: Joi.string().required().escapeHTML(),
     url: Joi.string().required(),
   }).required(),
+});
+
+module.exports.createNewProductSchema = Joi.object({
+  name: Joi.string().required().escapeHTML(),
+  description: Joi.string().max(250).required().escapeHTML(),
+  price: Joi.number().positive().required(),
+  type: Joi.string().required().escapeHTML(),
+  cuisine: Joi.string().required().escapeHTML(),
+  category: Joi.string().required().escapeHTML(),
+  images: Joi.array().min(1).required(),
+});
+
+module.exports.updateProductDetailsSchema = Joi.object({
+  product_id: Joi.string().required().escapeHTML(),
+  product_details: Joi.object({
+    name: Joi.string().escapeHTML(),
+    description: Joi.string().max(250).escapeHTML(),
+    price: Joi.number().positive(),
+    type: Joi.string().escapeHTML(),
+    cuisine: Joi.string().escapeHTML(),
+    category: Joi.string().escapeHTML(),
+    images: Joi.array().min(1),
+  })
+    .min(1)
+    .required(),
+});
+
+module.exports.createNewTableSchema = Joi.object({
+  number: Joi.number().min(0).required(),
+  price: Joi.number().min(0).required(),
+  capacity: Joi.number().min(1).required(),
+});
+
+module.exports.updateTableSchema = Joi.object({
+  tableId: Joi.string().required().escapeHTML(),
+  data: Joi.object({
+    number: Joi.number().min(0),
+    price: Joi.number().min(0),
+    capacity: Joi.number().min(1),
+  })
+    .min(1)
+    .required(),
+});
+
+module.exports.newOrderSchema = Joi.object({
+  cid: Joi.string().required().escapeHTML(),
+  bookingDetails: Joi.object({
+    firstName: Joi.string().required().escapeHTML(),
+    lastName: Joi.string().required().escapeHTML(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ["com", "in"] } })
+      .required()
+      .escapeHTML(),
+    phone: Joi.object({
+      code: Joi.string().required().escapeHTML(),
+      phone: Joi.string()
+        .required()
+        .regex(/^\d{10}$/),
+    }).required(),
+    request: Joi.string().max(250).escapeHTML(),
+    date: Joi.date().required(),
+    time: Joi.string().required(),
+  }),
 });

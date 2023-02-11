@@ -37,6 +37,16 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "vendor", "admin"],
       require: [true, "User type is required"],
     },
+    firstName: {
+      type: String,
+      trim: true,
+      default: null,
+    },
+    lastName: {
+      type: String,
+      trim: true,
+      default: null,
+    },
   },
   {
     timestamps: true,

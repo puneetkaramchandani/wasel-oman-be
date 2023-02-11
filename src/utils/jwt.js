@@ -6,13 +6,54 @@ function jwt() {
   const secret = process.env.JWT_SECRET;
   return expressjwt({ secret, algorithms: ["HS256"], isRevoked }).unless({
     path: [
-      "/",
-      "/login/user",
-      "/login/vendor",
-      "/login/admin",
-      "/user/register",
-      "/restaurants",
-      "/contactUs",
+      {
+        url: "/",
+        method: ["GET"],
+      },
+      {
+        url: "/login/user",
+        method: ["POST"],
+      },
+      {
+        url: "/login/admin",
+        method: ["POST"],
+      },
+      {
+        url: "/login/vendor",
+        method: ["POST"],
+      },
+      {
+        url: "/user/register",
+        method: ["POST"],
+      },
+      {
+        url: "/restaurants",
+        method: ["GET"],
+      },
+      {
+        url: "/tables",
+        method: ["GET"],
+      },
+      {
+        url: /^\/restaurants\/[0-9a-fA-F]{24}$/,
+        method: ["GET"],
+      },
+      {
+        url: /^\/restaurants\/[0-9a-fA-F]{24}\/products/,
+        method: ["GET"],
+      },
+      {
+        url: /^\/restaurants\/[0-9a-fA-F]{24}\/tables/,
+        method: ["GET"],
+      },
+      {
+        url: "/products",
+        method: ["GET"],
+      },
+      {
+        url: "/contactUs",
+        method: ["POST"],
+      },
     ],
   });
 }

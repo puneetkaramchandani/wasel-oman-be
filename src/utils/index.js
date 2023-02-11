@@ -7,7 +7,12 @@ const {
   userRegisterSchema,
   userLoginSchema,
   contactUsQuerySchema,
-  createNewRestaurantSchema
+  createNewRestaurantSchema,
+  createNewProductSchema,
+  updateProductDetailsSchema,
+  createNewTableSchema,
+  updateTableSchema,
+  newOrderSchema,
 } = require("./schema");
 const validateSchema = require("./validate");
 module.exports = {
@@ -20,5 +25,10 @@ module.exports = {
   userLoginSchema,
   validateSchema,
   contactUsQuerySchema,
-  createNewRestaurantSchema
+  createNewRestaurantSchema,
+  createNewProductSchema,
+  updateProductDetailsSchema,
+  createNewTableSchema,
+  updateTableSchema,
+  newOrderSchema,
 };

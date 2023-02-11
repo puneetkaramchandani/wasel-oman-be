@@ -27,8 +27,12 @@ app.post(
   })
 );
 
+app.use("/cart", require("./cart"));
 app.use("/user", require("./user"));
 app.use("/login", require("./login"));
+app.use("/orders", require("./order"));
+app.use("/tables", require("./table"));
+app.use("/products", require("./product"));
 app.use("/restaurants", require("./restaurant"));
 
 app.all("*", (req, res, next) => {
