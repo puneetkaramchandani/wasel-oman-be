@@ -140,6 +140,19 @@ module.exports.updateTableSchema = Joi.object({
 module.exports.newOrderSchema = Joi.object({
   cid: Joi.string().required().escapeHTML(),
   bookingDetails: Joi.object({
+    firstName: Joi.string().required().escapeHTML(),
+    lastName: Joi.string().required().escapeHTML(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ["com", "in"] } })
+      .required()
+      .escapeHTML(),
+    phone: Joi.object({
+      code: Joi.string().required().escapeHTML(),
+      phone: Joi.string()
+        .required()
+        .regex(/^\d{10}$/),
+    }).required(),
+    request: Joi.string().max(250).escapeHTML(),
     date: Joi.date().required(),
     time: Joi.string().required(),
   }),

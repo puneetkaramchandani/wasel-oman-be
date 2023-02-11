@@ -15,7 +15,20 @@ module.exports = {
 };
 
 async function getUserCart(user = null) {
-  let cart = await Cart.findOne({ user: user?._id });
+  let cart = await Cart.findOne({ user: user?._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   if (cart === null) cart = new Cart({ user: user._id });
   await cart.save();
   return { cart };
@@ -25,11 +38,26 @@ async function deleteUserCart(cid = null, user = null) {
   let cart = await Cart.findOne({ _id: cid, user: user?._id });
   if (cart === null) throw new ExpressError("Cart not found", 402);
   else await cart.delete();
-  return { cart };
+  let newCart = new Cart({ user: user._id });
+  await newCart.save();
+  return { cart: newCart };
 }
 
 async function addProductToCart(cid = null, pid = null, user = null) {
-  const cart = await Cart.findOne({ _id: cid, user: user?._id });
+  const cart = await Cart.findOne({ _id: cid, user: user?._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   const product = await Product.findById(pid);
   if (cart === null) {
     throw new ExpressError("Cart not found", 402);
@@ -52,12 +80,12 @@ async function addProductToCart(cid = null, pid = null, user = null) {
 
     if (products.length === 0 || indexOfExistingProduct === -1) {
       products.push({
-        product: product._id,
+        product: { ...product },
         quantity: 1,
       });
     } else {
       products[indexOfExistingProduct] = {
-        product: product._id,
+        product: { ...product },
         quantity: products[indexOfExistingProduct].quantity + 1,
       };
     }
@@ -70,7 +98,20 @@ async function addProductToCart(cid = null, pid = null, user = null) {
 }
 
 async function removeProductFromCart(cid = null, pid = null, user = null) {
-  const cart = await Cart.findOne({ _id: cid, user: user?._id });
+  const cart = await Cart.findOne({ _id: cid, user: user?._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   const product = await Product.findById(pid);
   if (cart === null) {
     throw new ExpressError("Cart not found", 402);
@@ -102,7 +143,20 @@ async function removeProductFromCart(cid = null, pid = null, user = null) {
 }
 
 async function deleteProductFromCart(cid = null, pid = null, user = null) {
-  const cart = await Cart.findOne({ _id: cid, user: user?._id });
+  const cart = await Cart.findOne({ _id: cid, user: user?._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   const product = await Product.findById(pid);
   if (cart === null) {
     throw new ExpressError("Cart not found", 402);
@@ -129,7 +183,20 @@ async function deleteProductFromCart(cid = null, pid = null, user = null) {
 }
 
 async function addTable(cid = null, tid = null, user = null) {
-  const cart = await Cart.findOne({ _id: cid, user: user?._id });
+  const cart = await Cart.findOne({ _id: cid, user: user?._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   const table = await Table.findById(tid);
   if (cart === null) {
     throw new ExpressError("Cart not found", 402);
@@ -142,7 +209,10 @@ async function addTable(cid = null, tid = null, user = null) {
     );
   } else {
     const { tables } = cart;
-    const indexOfExistingTable = tables.indexOf(table._id);
+    const existingTable = tables.filter((item) =>
+      item._id.equals(table._id)
+    )[0];
+    const indexOfExistingTable = tables.indexOf(existingTable);
     if (indexOfExistingTable > -1) {
       throw new ExpressError("Table already added", 402);
     } else if (table.status != "free") {
@@ -158,7 +228,20 @@ async function addTable(cid = null, tid = null, user = null) {
 }
 
 async function removeTable(cid = null, tid = null, user = null) {
-  const cart = await Cart.findOne({ _id: cid, user: user?._id });
+  const cart = await Cart.findOne({ _id: cid, user: user?._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   const table = await Table.findById(tid);
   if (cart === null) {
     throw new ExpressError("Cart not found", 402);
@@ -166,7 +249,10 @@ async function removeTable(cid = null, tid = null, user = null) {
     throw new ExpressError("Table not found", 402);
   } else {
     const { tables } = cart;
-    const indexOfExistingTable = tables.indexOf(table._id);
+    const existingTable = tables.filter((item) =>
+      item._id.equals(table._id)
+    )[0];
+    const indexOfExistingTable = tables.indexOf(existingTable);
     if (indexOfExistingTable === -1) {
       throw new ExpressError("Table not found in cart", 402);
     } else {
@@ -181,7 +267,20 @@ async function removeTable(cid = null, tid = null, user = null) {
 }
 
 async function deleteTable(cid = null, user = null) {
-  const cart = await Cart.findOne({ _id: cid, user: user?._id });
+  const cart = await Cart.findOne({ _id: cid, user: user?._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   if (cart === null) {
     throw new ExpressError("Cart not found", 402);
   } else {

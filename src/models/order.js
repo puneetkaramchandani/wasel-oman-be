@@ -43,6 +43,33 @@ const orderSchema = new mongoose.Schema(
       default: "pending",
     },
     bookingDetails: {
+      firstName: {
+        type: String,
+        trim: true,
+        required: [true, "First name is required"],
+      },
+      lastName: {
+        type: String,
+        trim: true,
+        required: [true, "Last name is required"],
+      },
+      phone: {
+        code: {
+          type: String,
+          trim: true,
+          required: [true, "Phone code is required"],
+        },
+        phone: {
+          type: String,
+          trim: true,
+          required: [true, "Phone code is required"],
+        },
+      },
+      email: {
+        trim: true,
+        type: String,
+        required: [true, "Email is required"],
+      },
       date: {
         type: Date,
         required: [true, "Date is required"],
@@ -52,6 +79,16 @@ const orderSchema = new mongoose.Schema(
         trim: true,
         required: [true, "Time is required"],
       },
+      request: {
+        type: String,
+        trim: true,
+        default: null,
+      },
+    },
+    orderNo: {
+      trim: true,
+      type: String,
+      required: [true, "Order number is required"],
     },
     secret: {
       type: Number,
