@@ -9,7 +9,13 @@ module.exports = {
   createNewRestaurant,
   getRestaurantProducts,
   getRestaurantTables,
+  getMyRestaurant,
 };
+
+async function getMyRestaurant(user) {
+  const restaurant = await Restaurant.findOne({ user: user });
+  return { restaurant };
+}
 
 async function getAllRestaurants() {
   const restaurants = await Restaurant.find();

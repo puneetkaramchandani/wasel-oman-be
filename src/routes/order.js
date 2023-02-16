@@ -10,7 +10,12 @@ const {
   STATUS_CODES: { SUCCESS },
 } = require("../constants");
 const {
-  orderServices: { createNewOrder, getMyOrders, getRestaurantOrders },
+  orderServices: {
+    createNewOrder,
+    getMyOrders,
+    getOrderById,
+    getRestaurantOrders,
+  },
 } = require("../services");
 const { vendorOnly, restaurantOnly } = require("../middleware");
 const { ObjectId } = require("mongodb");
@@ -21,6 +26,18 @@ router.get(
   "/",
   catchAsync(async (req, res) => {
     const data = await getMyOrders(req.user);
+    sendResponse(res, SUCCESS, data);
+  })
+);
+
+router.get(
+  "/:order_id",
+  catchAsync(async (req, res) => {
+    const { order_id } = req.params;
+    if (!ObjectId.isValid(order_id)) {
+      throw new ExpressError("Invalid order id", 403);
+    }
+    const data = await getOrderById(order_id, req.user);
     sendResponse(res, SUCCESS, data);
   })
 );

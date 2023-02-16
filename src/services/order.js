@@ -4,11 +4,50 @@ const Restaurant = require("../models/restaurant");
 const { ExpressError } = require("../utils");
 const Randomatic = require("randomatic");
 
-module.exports = { createNewOrder, getMyOrders, getRestaurantOrders };
+module.exports = {
+  createNewOrder,
+  getMyOrders,
+  getRestaurantOrders,
+  getOrderById,
+};
 
 async function getMyOrders(user) {
-  const orders = await Order.find({ user: user._id });
+  const orders = await Order.find({ user: user._id }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
   return { orders };
+}
+
+async function getOrderById(order_id, user) {
+  const order = await Order.findOne({
+    _id: order_id,
+    user: user._id,
+  }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
+  return { order };
 }
 
 async function getRestaurantOrders(restaurant) {

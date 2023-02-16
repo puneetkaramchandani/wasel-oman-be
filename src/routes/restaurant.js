@@ -3,23 +3,15 @@ const {
   STATUS_CODES: { SUCCESS },
 } = require("../constants");
 
-const {
-  catchAsync,
-  sendResponse,
-  validateSchema,
-  createNewRestaurantSchema,
-  ExpressError,
-} = require("../utils");
+const { catchAsync, sendResponse, ExpressError } = require("../utils");
 const {
   restaurantServices: {
     getAllRestaurants,
-    createNewRestaurant,
     getRestaurantById,
     getRestaurantTables,
     getRestaurantProducts,
   },
 } = require("../services");
-const { vendorOnly } = require("../middleware");
 const { ObjectId } = require("mongodb");
 
 const router = express.Router();
@@ -74,32 +66,5 @@ router.get(
 );
 
 // Public Routes
-
-// Vendor Only Routes
-
-/**
- * Middleware to allow for user type === vendor only
- *
- */
-router.use(
-  catchAsync(async (req, res, next) => {
-    await vendorOnly(req, res, next);
-  })
-);
-
-/**
- * Creates a new restaurant and returns the data
- */
-
-router.post(
-  "/new",
-  catchAsync(async (req, res) => {
-    await validateSchema(createNewRestaurantSchema, req.body);
-    const data = await createNewRestaurant(req.body, req.user);
-    sendResponse(res, SUCCESS, data);
-  })
-);
-
-// Vendor Only Routes
 
 module.exports = router;
