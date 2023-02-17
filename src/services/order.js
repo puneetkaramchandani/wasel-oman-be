@@ -51,7 +51,7 @@ async function getOrderById(order_id, user) {
 }
 
 async function getRestaurantOrders(restaurant) {
-  const orders = await Order.find({ restaurant: restaurant }).populate([
+  const orders = await Order.find({ restaurant: restaurant._id }).populate([
     {
       path: "products.product",
       model: "Product",

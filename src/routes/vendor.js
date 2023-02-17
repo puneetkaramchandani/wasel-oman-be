@@ -11,8 +11,9 @@ const {
 } = require("../utils");
 const {
   restaurantServices: { createNewRestaurant, getMyRestaurant },
+  orderServices: { getRestaurantOrders },
 } = require("../services");
-const { vendorOnly } = require("../middleware");
+const { vendorOnly, restaurantOnly } = require("../middleware");
 
 const router = express.Router();
 
@@ -50,5 +51,19 @@ router.post(
 );
 
 // Vendor Only Routes
+
+router.use(
+  catchAsync(async (req, res, next) => {
+    await restaurantOnly(req, res, next);
+  })
+);
+
+router.get(
+  "/orders",
+  catchAsync(async (req, res) => {
+    const data = await getRestaurantOrders(req.restaurant);
+    sendResponse(res, SUCCESS, data);
+  })
+);
 
 module.exports = router;

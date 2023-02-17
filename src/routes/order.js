@@ -10,14 +10,8 @@ const {
   STATUS_CODES: { SUCCESS },
 } = require("../constants");
 const {
-  orderServices: {
-    createNewOrder,
-    getMyOrders,
-    getOrderById,
-    getRestaurantOrders,
-  },
+  orderServices: { createNewOrder, getMyOrders, getOrderById },
 } = require("../services");
-const { vendorOnly, restaurantOnly } = require("../middleware");
 const { ObjectId } = require("mongodb");
 
 const router = express.Router();
@@ -49,27 +43,6 @@ router.post(
     const { cid = null } = req.body;
     if (!ObjectId.isValid(cid)) throw new ExpressError("Invalid card id", 403);
     const data = await createNewOrder(req.user, req.body);
-    sendResponse(res, SUCCESS, data);
-  })
-);
-
-// Vendor Only
-router.use(
-  catchAsync(async (req, res, next) => {
-    await vendorOnly(req, res, next);
-  })
-);
-
-router.use(
-  catchAsync(async (req, res, next) => {
-    await restaurantOnly(req, res, next);
-  })
-);
-
-router.get(
-  "/restaurant",
-  catchAsync(async (req, res) => {
-    const data = await getRestaurantOrders(req.restaurant);
     sendResponse(res, SUCCESS, data);
   })
 );
