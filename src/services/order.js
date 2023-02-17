@@ -53,20 +53,22 @@ async function getOrderById(order_id, user) {
 }
 
 async function getRestaurantOrders(restaurant) {
-  const orders = await Order.find({ restaurant: restaurant._id }).populate([
-    {
-      path: "products.product",
-      model: "Product",
-    },
-    {
-      path: "tables",
-      model: "Table",
-    },
-    {
-      path: "restaurant",
-      model: "Restaurant",
-    },
-  ]);
+  const orders = await Order.find({ restaurant: restaurant._id })
+    .select("-secret")
+    .populate([
+      {
+        path: "products.product",
+        model: "Product",
+      },
+      {
+        path: "tables",
+        model: "Table",
+      },
+      {
+        path: "restaurant",
+        model: "Restaurant",
+      },
+    ]);
   return { orders };
 }
 
@@ -74,21 +76,23 @@ async function getRestaurantOrderById(oid, restaurant) {
   const order = await Order.findOne({
     _id: oid,
     restaurant: restaurant._id,
-  }).populate([
-    {
-      path: "products.product",
-      model: "Product",
-    },
-    {
-      path: "tables",
-      model: "Table",
-    },
-    {
-      path: "restaurant",
-      model: "Restaurant",
-    },
-  ]);
-  
+  })
+    .select("-secret")
+    .populate([
+      {
+        path: "products.product",
+        model: "Product",
+      },
+      {
+        path: "tables",
+        model: "Table",
+      },
+      {
+        path: "restaurant",
+        model: "Restaurant",
+      },
+    ]);
+
   return { order };
 }
 
