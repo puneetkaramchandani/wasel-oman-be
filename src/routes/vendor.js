@@ -5,15 +5,17 @@ const {
 
 const {
   catchAsync,
+  ExpressError,
   sendResponse,
   validateSchema,
   createNewRestaurantSchema,
 } = require("../utils");
 const {
   restaurantServices: { createNewRestaurant, getMyRestaurant },
-  orderServices: { getRestaurantOrders },
+  orderServices: { getRestaurantOrders, getRestaurantOrderById },
 } = require("../services");
 const { vendorOnly, restaurantOnly } = require("../middleware");
+const { ObjectId } = require("mongodb");
 
 const router = express.Router();
 
@@ -62,6 +64,18 @@ router.get(
   "/orders",
   catchAsync(async (req, res) => {
     const data = await getRestaurantOrders(req.restaurant);
+    sendResponse(res, SUCCESS, data);
+  })
+);
+
+router.get(
+  "/orders/:oid",
+  catchAsync(async (req, res) => {
+    const { oid } = req.params;
+    if (!ObjectId.isValid(oid)) {
+      throw new ExpressError("Invalid order id", 403);
+    }
+    const data = await getRestaurantOrderById(oid, req.restaurant);
     sendResponse(res, SUCCESS, data);
   })
 );

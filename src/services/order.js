@@ -9,6 +9,7 @@ module.exports = {
   getMyOrders,
   getRestaurantOrders,
   getOrderById,
+  getRestaurantOrderById,
 };
 
 async function getMyOrders(user) {
@@ -47,6 +48,7 @@ async function getOrderById(order_id, user) {
       model: "Restaurant",
     },
   ]);
+
   return { order };
 }
 
@@ -66,6 +68,28 @@ async function getRestaurantOrders(restaurant) {
     },
   ]);
   return { orders };
+}
+
+async function getRestaurantOrderById(oid, restaurant) {
+  const order = await Order.findOne({
+    _id: oid,
+    restaurant: restaurant._id,
+  }).populate([
+    {
+      path: "products.product",
+      model: "Product",
+    },
+    {
+      path: "tables",
+      model: "Table",
+    },
+    {
+      path: "restaurant",
+      model: "Restaurant",
+    },
+  ]);
+  
+  return { order };
 }
 
 async function createNewOrder(user, data) {
