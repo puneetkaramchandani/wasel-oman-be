@@ -67,7 +67,7 @@ module.exports.contactUsQuerySchema = Joi.object({
 
 module.exports.createNewRestaurantSchema = Joi.object({
   name: Joi.string().required().escapeHTML(),
-  description: Joi.string().required().max(250).escapeHTML(),
+  description: Joi.string().required().max(250),
   address: Joi.object({
     line: Joi.string().required().escapeHTML(),
     line: Joi.string().required().escapeHTML(),
@@ -83,7 +83,7 @@ module.exports.createNewRestaurantSchema = Joi.object({
     openTime: Joi.string().required().escapeHTML(),
     closeTime: Joi.string().required().escapeHTML(),
   }).required(),
-  type: Joi.string().required().escapeHTML(),
+  type: Joi.string().required(),
   cuisines: Joi.array().required(),
   thumbnail: Joi.object({
     fileName: Joi.string().required().escapeHTML(),
@@ -97,7 +97,7 @@ module.exports.createNewRestaurantSchema = Joi.object({
 
 module.exports.createNewProductSchema = Joi.object({
   name: Joi.string().required().escapeHTML(),
-  description: Joi.string().max(250).required().escapeHTML(),
+  description: Joi.string().max(250).required(),
   price: Joi.number().positive().required(),
   type: Joi.string().required().escapeHTML(),
   cuisine: Joi.string().required().escapeHTML(),
@@ -109,7 +109,7 @@ module.exports.updateProductDetailsSchema = Joi.object({
   product_id: Joi.string().required().escapeHTML(),
   product_details: Joi.object({
     name: Joi.string().escapeHTML(),
-    description: Joi.string().max(250).escapeHTML(),
+    description: Joi.string().max(250),
     price: Joi.number().positive(),
     type: Joi.string().escapeHTML(),
     cuisine: Joi.string().escapeHTML(),
