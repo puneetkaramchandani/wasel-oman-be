@@ -47,6 +47,10 @@ const STATUS_CODES = {
     code: 4008,
     message: "Email already in use",
   },
+  PHONE_NO_ALREADY_IN_USE: {
+    code: 4009,
+    message: "Phone number is already linked to a different account",
+  },
 };
 
 module.exports = STATUS_CODES;

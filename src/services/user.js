@@ -14,7 +14,8 @@ async function getUserById(user_id) {
 
 async function createNewUser(data) {
   const { email, password, type = "user", phone } = data;
-  await User.checkExistingUser(email);
+  await User.checkExistingUserEmail(email);
+  await User.checkExistingUserPhone(phone);
   const newUser = new User({ email, password, type, phone });
   const token = generateToken(newUser._id);
   await newUser.save();
