@@ -21,7 +21,6 @@ const contactSchema = new mongoose.Schema(
       phone: {
         type: String,
         trim: true,
-        unique: true,
         required: [true, "Phone code is required"],
       },
     },
