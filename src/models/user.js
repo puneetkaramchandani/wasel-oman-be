@@ -2,7 +2,12 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const { ExpressError } = require("../utils");
 const {
-  STATUS_CODES: { USER_NOT_DEFINED, PASSWORD_INCORRECT, USER_ALREADY_EXISTS },
+  STATUS_CODES: {
+    USER_NOT_DEFINED,
+    PASSWORD_INCORRECT,
+    USER_ALREADY_EXISTS,
+    PHONE_NO_ALREADY_IN_USE,
+  },
 } = require("../constants");
 
 const userSchema = new mongoose.Schema(
@@ -84,12 +89,23 @@ userSchema.statics.findAndAuthenticate = async function (
 // Function to authenticate
 
 // Function to create a new user
-userSchema.statics.checkExistingUser = async function (email) {
+userSchema.statics.checkExistingUserEmail = async function (email) {
   const foundUser = await this.findOne({ email });
   if (foundUser) {
     throw new ExpressError(
       USER_ALREADY_EXISTS.message,
       USER_ALREADY_EXISTS.code
+    );
+  } else {
+    return;
+  }
+};
+userSchema.statics.checkExistingUserPhone = async function (phone) {
+  const foundUser = await this.findOne({ phone });
+  if (foundUser) {
+    throw new ExpressError(
+      PHONE_NO_ALREADY_IN_USE.message,
+      PHONE_NO_ALREADY_IN_USE.code
     );
   } else {
     return;
