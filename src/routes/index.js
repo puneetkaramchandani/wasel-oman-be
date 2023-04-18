@@ -33,6 +33,7 @@ app.use("/login", require("./login"));
 app.use("/orders", require("./order"));
 app.use("/tables", require("./table"));
 app.use("/vendor", require("./vendor"));
+app.use("/cuisine", require("./cuisine"));
 app.use("/products", require("./product"));
 app.use("/restaurants", require("./restaurant"));
 app.use("/vendorImageStore", require("./vendorImageStore"));

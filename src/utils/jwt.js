@@ -54,6 +54,10 @@ function jwt() {
         url: "/contactUs",
         method: ["POST"],
       },
+      {
+        url: "/cuisine",
+        method: ["GET"],
+      },
     ],
   });
 }
