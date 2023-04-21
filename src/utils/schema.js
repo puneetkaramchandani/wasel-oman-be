@@ -67,7 +67,7 @@ module.exports.contactUsQuerySchema = Joi.object({
 
 module.exports.createNewRestaurantSchema = Joi.object({
   name: Joi.string().required().escapeHTML(),
-  description: Joi.string().required().max(250),
+  description: Joi.string().required(),
   address: Joi.object({
     line: Joi.string().required().escapeHTML(),
     line: Joi.string().required().escapeHTML(),
@@ -152,7 +152,7 @@ module.exports.newOrderSchema = Joi.object({
         .required()
         .regex(/^\d{10}$/),
     }).required(),
-    request: Joi.string().max(250).escapeHTML(),
+    request: Joi.string().escapeHTML(),
     date: Joi.date().required(),
     time: Joi.string().required(),
   }),
