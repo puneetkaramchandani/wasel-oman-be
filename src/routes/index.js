@@ -36,6 +36,7 @@ app.use("/vendor", require("./vendor"));
 app.use("/cuisine", require("./cuisine"));
 app.use("/products", require("./product"));
 app.use("/restaurants", require("./restaurant"));
+app.use("/cuisineImageStore", require("./cuisineImageStore"));
 app.use("/vendorImageStore", require("./vendorImageStore"));
 app.use("/productImageStore", require("./productImageStore"));
 app.all("*", (req, res, next) => {
