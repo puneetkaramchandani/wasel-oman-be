@@ -162,3 +162,17 @@ module.exports.completeOrderRequestSchema = Joi.object({
   oid: Joi.string().required().escapeHTML(),
   orderSecret: Joi.string().min(4).max(4).required().escapeHTML(),
 });
+
+module.exports.complaintRequestSchema = Joi.object({
+  subject: Joi.string().required().escapeHTML(),
+  category: Joi.string().required().escapeHTML(),
+  complaint: Joi.string().required().escapeHTML(),
+});
+
+module.exports.editComplaintRequestSchema = Joi.object({
+  complaint_id: Joi.string().required().escapeHTML(),
+  complaint_data: Joi.object({
+    status: Joi.string().required().escapeHTML(),
+    remarks: Joi.string().required().escapeHTML(),
+  }).required(),
+});
