@@ -15,7 +15,9 @@ const {
   newOrderSchema,
   completeOrderRequestSchema,
   complaintRequestSchema,
-  editComplaintRequestSchema
+  editComplaintRequestSchema,
+  addNewLocationSchema,
+  updateLocationDetailsSchema,
 } = require("./schema");
 const validateSchema = require("./validate");
 module.exports = {
@@ -36,5 +38,7 @@ module.exports = {
   newOrderSchema,
   completeOrderRequestSchema,
   complaintRequestSchema,
-  editComplaintRequestSchema
+  editComplaintRequestSchema,
+  addNewLocationSchema,
+  updateLocationDetailsSchema,
 };

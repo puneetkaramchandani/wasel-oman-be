@@ -176,3 +176,24 @@ module.exports.editComplaintRequestSchema = Joi.object({
     remarks: Joi.string().required().escapeHTML(),
   }).required(),
 });
+
+module.exports.addNewLocationSchema = Joi.object({
+  country: Joi.string().required().escapeHTML(),
+  city: Joi.string().required().escapeHTML(),
+  thumbnail: Joi.object({
+    fileName: Joi.string().required().escapeHTML(),
+    url: Joi.string().required(),
+  }).required(),
+});
+
+module.exports.updateLocationDetailsSchema = Joi.object({
+  location_id: Joi.string().required().escapeHTML(),
+  location_data: Joi.object({
+    country: Joi.string().required().escapeHTML(),
+    city: Joi.string().required().escapeHTML(),
+    thumbnail: Joi.object({
+      fileName: Joi.string().required().escapeHTML(),
+      url: Joi.string().required(),
+    }).required(),
+  }).required(),
+});

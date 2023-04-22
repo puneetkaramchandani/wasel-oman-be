@@ -27,7 +27,6 @@ app.post(
   })
 );
 
-
 app.use("/cart", require("./cart"));
 app.use("/user", require("./user"));
 app.use("/admin", require("./admin"));
@@ -37,6 +36,7 @@ app.use("/tables", require("./table"));
 app.use("/vendor", require("./vendor"));
 app.use("/cuisine", require("./cuisine"));
 app.use("/products", require("./product"));
+app.use("/location", require("./location"));
 app.use("/complaint", require("./complaint"));
 app.use("/restaurants", require("./restaurant"));
 app.use("/cuisineImageStore", require("./cuisineImageStore"));

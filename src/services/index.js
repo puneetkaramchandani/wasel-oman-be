@@ -6,6 +6,7 @@ const tableServices = require("./table");
 const cuisineServices = require("./cuisine");
 const Contact = require("../models/contact");
 const productServices = require("./product");
+const locationServices = require("./location");
 const complaintServices = require("./complaint");
 const restaurantServices = require("./restaurant");
 
@@ -19,6 +20,7 @@ module.exports = {
   productServices,
   complaintServices,
   restaurantServices,
+  locationServices,
   createContactUsQuery,
 };
 

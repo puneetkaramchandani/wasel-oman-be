@@ -58,6 +58,10 @@ function jwt() {
         url: "/cuisine",
         method: ["GET"],
       },
+      {
+        url: "/location",
+        method: ["GET"],
+      },
     ],
   });
 }
