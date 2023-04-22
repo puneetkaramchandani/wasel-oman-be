@@ -24,7 +24,7 @@ const router = express.Router();
 router.get(
   "/",
   catchAsync(async (req, res) => {
-    const data = await getAllRestaurants();
+    const data = await getAllRestaurants(req.query);
     sendResponse(res, SUCCESS, data);
   })
 );
