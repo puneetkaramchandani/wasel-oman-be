@@ -9,10 +9,11 @@ const {
   sendResponse,
   validateSchema,
   createNewRestaurantSchema,
+  completeOrderRequestSchema,
 } = require("../utils");
 const {
   restaurantServices: { createNewRestaurant, getMyRestaurant },
-  orderServices: { getRestaurantOrders, getRestaurantOrderById },
+  orderServices: { getRestaurantOrders, getRestaurantOrderById, completeOrder },
 } = require("../services");
 const { vendorOnly, restaurantOnly } = require("../middleware");
 const { ObjectId } = require("mongodb");
@@ -76,6 +77,19 @@ router.get(
       throw new ExpressError("Invalid order id", 403);
     }
     const data = await getRestaurantOrderById(oid, req.restaurant);
+    sendResponse(res, SUCCESS, data);
+  })
+);
+
+router.post(
+  "/completeOrder",
+  catchAsync(async (req, res) => {
+    await validateSchema(completeOrderRequestSchema, req.body);
+    const { oid } = req.body;
+    if (!ObjectId.isValid(oid)) {
+      throw new ExpressError("Invalid order id", 403);
+    }
+    const data = await completeOrder(req.body, req.restaurant);
     sendResponse(res, SUCCESS, data);
   })
 );

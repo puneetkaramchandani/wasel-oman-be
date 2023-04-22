@@ -10,6 +10,7 @@ module.exports = {
   getRestaurantOrders,
   getOrderById,
   getRestaurantOrderById,
+  completeOrder,
 };
 
 async function getMyOrders(user) {
@@ -134,4 +135,23 @@ async function createNewOrder(user, data) {
   await order.save();
   await cart.delete();
   return { order };
+}
+
+async function completeOrder(data, restaurant) {
+  const { oid = "", orderSecret = "" } = data;
+  const order = await Order.findOne({ _id:oid, restaurant });
+  if (!order) {
+    throw new ExpressError("Order not found", 400);
+  } else if (order.status === "completed") {
+    throw new ExpressError("Order is already completed", 300);
+  } else if (order.secret != parseInt(orderSecret)) {
+    throw new ExpressError("Invalid order secret", 400);
+  } else {
+    let updatedOrder = await Order.findByIdAndUpdate(
+      oid,
+      { status: "completed" },
+      { new: true, runValidators: true }
+    );
+    return { order: updatedOrder };
+  }
 }

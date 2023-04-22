@@ -13,6 +13,7 @@ const {
   createNewTableSchema,
   updateTableSchema,
   newOrderSchema,
+  completeOrderRequestSchema
 } = require("./schema");
 const validateSchema = require("./validate");
 module.exports = {
@@ -31,4 +32,5 @@ module.exports = {
   createNewTableSchema,
   updateTableSchema,
   newOrderSchema,
+  completeOrderRequestSchema
 };

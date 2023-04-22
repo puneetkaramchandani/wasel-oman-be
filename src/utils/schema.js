@@ -157,3 +157,8 @@ module.exports.newOrderSchema = Joi.object({
     time: Joi.string().required(),
   }),
 });
+
+module.exports.completeOrderRequestSchema = Joi.object({
+  oid: Joi.string().required().escapeHTML(),
+  orderSecret: Joi.string().min(4).max(4).required().escapeHTML(),
+});
