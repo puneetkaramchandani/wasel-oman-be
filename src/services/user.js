@@ -1,9 +1,11 @@
+const { isEmpty } = require("lodash");
 const User = require("../models/user");
-const { generateToken } = require("../utils");
+const { generateToken, ExpressError } = require("../utils");
 
 module.exports = {
   createNewUser,
   getUserById,
+  updateUserDetails,
 };
 
 async function getUserById(user_id) {
@@ -21,4 +23,21 @@ async function createNewUser(data) {
   await newUser.save();
   newUser.password = undefined;
   return { accessToken: token, user: newUser };
+}
+
+async function updateUserDetails(user, data) {
+  await checkIfUserDoesNotExists(user);
+  const updatedUser = await User.findByIdAndUpdate(
+    user._id,
+    { ...data },
+    { new: true, runValidators: true }
+  );
+
+  return { user: updatedUser };
+}
+
+async function checkIfUserDoesNotExists(userData) {
+  const user = await User.findById(userData._id);
+  if (isEmpty(user)) throw new ExpressError("User not found", 403);
+  else return;
 }

@@ -7,11 +7,12 @@ const {
   sendResponse,
   validateSchema,
   userRegisterSchema,
+  updateUserDetailsSchema,
 } = require("../utils");
 const {
   STATUS_CODES: { SUCCESS },
 } = require("../constants");
-const { getUserById } = require("../services/user");
+const { getUserById, updateUserDetails } = require("../services/user");
 
 const router = express.Router();
 
@@ -19,6 +20,15 @@ router.get(
   "/me",
   catchAsync(async (req, res) => {
     const data = await getUserById(req.user._id);
+    sendResponse(res, SUCCESS, data);
+  })
+);
+
+router.put(
+  "/me",
+  catchAsync(async (req, res) => {
+    await validateSchema(updateUserDetailsSchema, req.body);
+    const data = await updateUserDetails(req.user, req.body);
     sendResponse(res, SUCCESS, data);
   })
 );

@@ -197,3 +197,10 @@ module.exports.updateLocationDetailsSchema = Joi.object({
     }).required(),
   }).required(),
 });
+
+module.exports.updateUserDetailsSchema = Joi.object({
+  firstName: Joi.string().escapeHTML(),
+  lastName: Joi.string().escapeHTML(),
+  gender: Joi.string().escapeHTML(),
+  dateOfBirth: Joi.date(),
+});

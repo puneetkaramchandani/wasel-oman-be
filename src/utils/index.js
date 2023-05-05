@@ -18,6 +18,7 @@ const {
   editComplaintRequestSchema,
   addNewLocationSchema,
   updateLocationDetailsSchema,
+  updateUserDetailsSchema
 } = require("./schema");
 const validateSchema = require("./validate");
 module.exports = {
@@ -41,4 +42,5 @@ module.exports = {
   editComplaintRequestSchema,
   addNewLocationSchema,
   updateLocationDetailsSchema,
+  updateUserDetailsSchema
 };
