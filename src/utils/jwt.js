@@ -62,6 +62,10 @@ function jwt() {
         url: "/location",
         method: ["GET"],
       },
+      {
+        url: "/user/verify/email",
+        method: ["GET"],
+      },
     ],
   });
 }
