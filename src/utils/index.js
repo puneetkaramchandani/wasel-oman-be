@@ -13,6 +13,12 @@ const {
   createNewTableSchema,
   updateTableSchema,
   newOrderSchema,
+  completeOrderRequestSchema,
+  complaintRequestSchema,
+  editComplaintRequestSchema,
+  addNewLocationSchema,
+  updateLocationDetailsSchema,
+  updateUserDetailsSchema
 } = require("./schema");
 const validateSchema = require("./validate");
 module.exports = {
@@ -31,4 +37,10 @@ module.exports = {
   createNewTableSchema,
   updateTableSchema,
   newOrderSchema,
+  completeOrderRequestSchema,
+  complaintRequestSchema,
+  editComplaintRequestSchema,
+  addNewLocationSchema,
+  updateLocationDetailsSchema,
+  updateUserDetailsSchema
 };

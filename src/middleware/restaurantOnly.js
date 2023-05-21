@@ -12,7 +12,7 @@ async function restaurantOnly(req, res, next) {
     req.restaurant = restaurant;
     next();
   } else {
-    throw new ExpressError("Create restaurant to add products", 403);
+    throw new ExpressError("Create restaurant to get started", 403);
   }
 }
 

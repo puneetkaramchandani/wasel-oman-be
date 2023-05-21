@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
       unique: true,
       required: [true, "Email is required"],
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
     phone: {
       code: {
         type: String,
@@ -30,6 +34,10 @@ const userSchema = new mongoose.Schema(
         unique: true,
         required: [true, "Phone code is required"],
       },
+    },
+    isPhoneVerified: {
+      type: Boolean,
+      default: false,
     },
     password: {
       trim: true,
@@ -50,6 +58,15 @@ const userSchema = new mongoose.Schema(
     lastName: {
       type: String,
       trim: true,
+      default: null,
+    },
+    gender: {
+      enum: [null, "M", "F", "O"],
+      default: null,
+      type: String,
+    },
+    dateOfBirth: {
+      type: Date,
       default: null,
     },
   },

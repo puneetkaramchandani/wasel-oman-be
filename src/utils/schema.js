@@ -67,7 +67,7 @@ module.exports.contactUsQuerySchema = Joi.object({
 
 module.exports.createNewRestaurantSchema = Joi.object({
   name: Joi.string().required().escapeHTML(),
-  description: Joi.string().required().max(250),
+  description: Joi.string().required(),
   address: Joi.object({
     line: Joi.string().required().escapeHTML(),
     line: Joi.string().required().escapeHTML(),
@@ -152,8 +152,55 @@ module.exports.newOrderSchema = Joi.object({
         .required()
         .regex(/^\d{10}$/),
     }).required(),
-    request: Joi.string().max(250).escapeHTML(),
+    request: Joi.string().escapeHTML(),
     date: Joi.date().required(),
     time: Joi.string().required(),
   }),
+});
+
+module.exports.completeOrderRequestSchema = Joi.object({
+  oid: Joi.string().required().escapeHTML(),
+  orderSecret: Joi.string().min(4).max(4).required().escapeHTML(),
+});
+
+module.exports.complaintRequestSchema = Joi.object({
+  subject: Joi.string().required().escapeHTML(),
+  category: Joi.string().required().escapeHTML(),
+  complaint: Joi.string().required().escapeHTML(),
+});
+
+module.exports.editComplaintRequestSchema = Joi.object({
+  complaint_id: Joi.string().required().escapeHTML(),
+  complaint_data: Joi.object({
+    status: Joi.string().required().escapeHTML(),
+    remarks: Joi.string().required().escapeHTML(),
+  }).required(),
+});
+
+module.exports.addNewLocationSchema = Joi.object({
+  country: Joi.string().required().escapeHTML(),
+  city: Joi.string().required().escapeHTML(),
+  thumbnail: Joi.object({
+    fileName: Joi.string().required().escapeHTML(),
+    url: Joi.string().required(),
+  }).required(),
+});
+
+module.exports.updateLocationDetailsSchema = Joi.object({
+  location_id: Joi.string().required().escapeHTML(),
+  location_data: Joi.object({
+    country: Joi.string().required().escapeHTML(),
+    city: Joi.string().required().escapeHTML(),
+    thumbnail: Joi.object({
+      fileName: Joi.string().required().escapeHTML(),
+      url: Joi.string().required(),
+    }).required(),
+  }).required(),
+});
+
+module.exports.updateUserDetailsSchema = Joi.object({
+  firstName: Joi.string().escapeHTML(),
+  lastName: Joi.string().escapeHTML(),
+  gender: Joi.string().escapeHTML(),
+  dateOfBirth: Joi.date(),
 });
