@@ -9,6 +9,7 @@ const productServices = require("./product");
 const locationServices = require("./location");
 const complaintServices = require("./complaint");
 const restaurantServices = require("./restaurant");
+const paymentServices = require("./payment");
 
 module.exports = {
   userServices,
@@ -22,6 +23,7 @@ module.exports = {
   restaurantServices,
   locationServices,
   createContactUsQuery,
+  paymentServices,
 };
 
 async function createContactUsQuery(data) {

@@ -34,6 +34,7 @@ app.use("/login", require("./login"));
 app.use("/orders", require("./order"));
 app.use("/tables", require("./table"));
 app.use("/vendor", require("./vendor"));
+app.use("/payment", require("./payment"));
 app.use("/cuisine", require("./cuisine"));
 app.use("/products", require("./product"));
 app.use("/location", require("./location"));
@@ -42,6 +43,7 @@ app.use("/restaurants", require("./restaurant"));
 app.use("/cuisineImageStore", require("./cuisineImageStore"));
 app.use("/vendorImageStore", require("./vendorImageStore"));
 app.use("/productImageStore", require("./productImageStore"));
+
 app.all("*", (req, res, next) => {
   next(new ExpressError(NOT_FOUND.message, NOT_FOUND.code));
 });

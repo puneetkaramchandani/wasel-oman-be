@@ -39,7 +39,7 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       trim: true,
-      enum: ["pending", "completed"],
+      enum: ["pending", "confirmed", "completed"],
       default: "pending",
     },
     bookingDetails: {
@@ -92,7 +92,7 @@ const orderSchema = new mongoose.Schema(
     },
     secret: {
       type: Number,
-      required: [true, "Order secret is required"],
+      // required: [true, "Order secret is required"],
     },
   },
   {

@@ -1,8 +1,11 @@
+const { createHostedPaymentPageRequest } = require("../helper/checkout");
 const Cart = require("../models/cart");
 const Order = require("../models/order");
 const Restaurant = require("../models/restaurant");
 const { ExpressError } = require("../utils");
 const Randomatic = require("randomatic");
+const Payment = require("../models/payment");
+const paymentServices = require("./payment");
 
 module.exports = {
   createNewOrder,
@@ -50,7 +53,9 @@ async function getOrderById(order_id, user) {
     },
   ]);
 
-  return { order };
+  const payment = await paymentServices.getPaymentDetails(order_id);
+
+  return { order, payment };
 }
 
 async function getRestaurantOrders(restaurant) {
@@ -110,6 +115,7 @@ async function createNewOrder(user, data) {
     restaurant = null,
     totalAmount = 0,
   } = cart;
+
   const restaurantDetails = await Restaurant.findById(restaurant);
 
   if (products.length === 0 && tables.length === 0) {
@@ -121,7 +127,9 @@ async function createNewOrder(user, data) {
   let orderNo =
     restaurantDetails.name.substring(0, 4).toUpperCase() +
     Randomatic("0", 6).toString();
-  let secret = Randomatic("0", 4);
+
+  // let secret = Randomatic("0", 4);
+
   const order = new Order({
     restaurant: restaurant,
     user: user._id,
@@ -129,17 +137,32 @@ async function createNewOrder(user, data) {
     tables: tables,
     products: products,
     bookingDetails,
-    secret: secret,
     orderNo: orderNo,
   });
+
+  const res = await createHostedPaymentPageRequest({
+    totalAmount,
+    order_id: order._id,
+    customerName: `${bookingDetails.firstName} ${bookingDetails.lastName}`,
+    customerEmail: bookingDetails.email,
+  });
+
+  const payment = new Payment({
+    hostedPaymentPageId: res.id,
+    order: order._id,
+    paymentPageLinkPublic: res._links.redirect.href,
+  });
+
+  await payment.save();
   await order.save();
   await cart.delete();
+
   return { order };
 }
 
 async function completeOrder(data, restaurant) {
   const { oid = "", orderSecret = "" } = data;
-  const order = await Order.findOne({ _id:oid, restaurant });
+  const order = await Order.findOne({ _id: oid, restaurant });
   if (!order) {
     throw new ExpressError("Order not found", 400);
   } else if (order.status === "completed") {
