@@ -14,8 +14,14 @@ router.get(
   "/confirm",
   catchAsync(async (req, res) => {
     const { order_id } = req.query;
-    await confirmPayment(order_id);
-    res.redirect(`${process.env.BASE_URL}/payment?order_id=${order_id}`);
+    const isPaymentReadSuccessfully = await confirmPayment(order_id);
+
+    if (isPaymentReadSuccessfully)
+      res.redirect(`${process.env.BASE_URL}/payment?order_id=${order_id}`);
+    else
+      res.redirect(
+        `${process.env.BACKEND_URL}/payment/confirm?order_id=${order_id}`
+      );
   })
 );
 

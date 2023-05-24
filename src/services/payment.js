@@ -1,3 +1,4 @@
+const { isEmpty } = require("lodash");
 const { checkHostedPaymentStatus } = require("../helper/checkout");
 const Order = require("../models/order");
 const Payment = require("../models/payment");
@@ -23,11 +24,19 @@ async function createNewPayment(data) {
 }
 
 async function confirmPayment(order_id) {
+  let isPaymentReadSuccessfully = false;
+  let paymentStatus = {};
+
   const order = await Order.findById(order_id);
   const payment = await Payment.findOne({ order: order });
-  const paymentStatus = await checkHostedPaymentStatus(
-    payment.hostedPaymentPageId
-  );
+
+  try {
+    paymentStatus = await checkHostedPaymentStatus(payment.hostedPaymentPageId);
+    isPaymentReadSuccessfully = true;
+  } catch (e) {
+    console.log(e);
+    isPaymentReadSuccessfully = false;
+  }
 
   if (paymentStatus.status === "Payment Received") {
     order.status = "confirmed";
@@ -35,10 +44,12 @@ async function confirmPayment(order_id) {
     await order.save();
   }
 
-  payment.status = paymentStatus.status;
-  await payment.save();
+  if (!isEmpty(paymentStatus)) {
+    payment.status = paymentStatus.status;
+    await payment.save();
+  }
 
-  return;
+  return isPaymentReadSuccessfully;
 }
 
 async function checkPaymentStatus() {}
